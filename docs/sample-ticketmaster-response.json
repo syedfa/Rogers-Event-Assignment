@@ -1,0 +1,841 @@
+{
+    "_embedded": {
+        "events": [
+            {
+                "name": "Ticket Pack - Breathtaking Gardens presented by Soul Expansion",
+                "type": "event",
+                "id": "rZ7HnEZ1Af-0Zd",
+                "test": false,
+                "url": "https://www.ticketweb.ca/event/ticket-pack-breathtaking-casa-loma-tickets/14864003",
+                "locale": "en-us",
+                "images": [
+                    {
+                        "ratio": "16_9",
+                        "url": "https://s1.ticketm.net/dam/c/8cf/a6653880-7899-4f67-8067-1f95f4d158cf_124761_RECOMENDATION_16_9.jpg",
+                        "width": 100,
+                        "height": 56,
+                        "fallback": true
+                    },
+                    {
+                        "ratio": "16_9",
+                        "url": "https://s1.ticketm.net/dam/c/8cf/a6653880-7899-4f67-8067-1f95f4d158cf_124761_RETINA_PORTRAIT_16_9.jpg",
+                        "width": 640,
+                        "height": 360,
+                        "fallback": true
+                    },
+                    {
+                        "ratio": "16_9",
+                        "url": "https://s1.ticketm.net/dam/c/8cf/a6653880-7899-4f67-8067-1f95f4d158cf_124761_RETINA_LANDSCAPE_16_9.jpg",
+                        "width": 1136,
+                        "height": 639,
+                        "fallback": true
+                    },
+                    {
+                        "ratio": "3_2",
+                        "url": "https://s1.ticketm.net/dam/c/8cf/a6653880-7899-4f67-8067-1f95f4d158cf_124761_RETINA_PORTRAIT_3_2.jpg",
+                        "width": 640,
+                        "height": 427,
+                        "fallback": true
+                    },
+                    {
+                        "ratio": "16_9",
+                        "url": "https://s1.ticketm.net/dam/c/8cf/a6653880-7899-4f67-8067-1f95f4d158cf_124761_EVENT_DETAIL_PAGE_16_9.jpg",
+                        "width": 205,
+                        "height": 115,
+                        "fallback": true
+                    },
+                    {
+                        "ratio": "16_9",
+                        "url": "https://s1.ticketm.net/dam/c/8cf/a6653880-7899-4f67-8067-1f95f4d158cf_124761_TABLET_LANDSCAPE_16_9.jpg",
+                        "width": 1024,
+                        "height": 576,
+                        "fallback": true
+                    },
+                    {
+                        "ratio": "16_9",
+                        "url": "https://i.ticketweb.com/i/00/13/46/38/03_Edp.jpg?v=20",
+                        "width": 640,
+                        "height": 361,
+                        "fallback": false
+                    },
+                    {
+                        "ratio": "16_9",
+                        "url": "https://s1.ticketm.net/dam/c/8cf/a6653880-7899-4f67-8067-1f95f4d158cf_124761_TABLET_LANDSCAPE_LARGE_16_9.jpg",
+                        "width": 2048,
+                        "height": 1152,
+                        "fallback": true
+                    },
+                    {
+                        "ratio": "4_3",
+                        "url": "https://s1.ticketm.net/dam/c/8cf/a6653880-7899-4f67-8067-1f95f4d158cf_124761_CUSTOM.jpg",
+                        "width": 305,
+                        "height": 225,
+                        "fallback": true
+                    },
+                    {
+                        "ratio": "3_2",
+                        "url": "https://s1.ticketm.net/dam/c/8cf/a6653880-7899-4f67-8067-1f95f4d158cf_124761_TABLET_LANDSCAPE_3_2.jpg",
+                        "width": 1024,
+                        "height": 683,
+                        "fallback": true
+                    },
+                    {
+                        "ratio": "3_2",
+                        "url": "https://s1.ticketm.net/dam/c/8cf/a6653880-7899-4f67-8067-1f95f4d158cf_124761_ARTIST_PAGE_3_2.jpg",
+                        "width": 305,
+                        "height": 203,
+                        "fallback": true
+                    }
+                ],
+                "distance": 2.17,
+                "units": "MILES",
+                "sales": {
+                    "public": {
+                        "startDateTime": "2026-04-18T14:00:00Z",
+                        "startTBD": false,
+                        "startTBA": false,
+                        "endDateTime": "2026-06-14T13:00:00Z"
+                    }
+                },
+                "dates": {
+                    "access": {
+                        "startDateTime": "2026-06-14T12:15:00Z",
+                        "startApproximate": false,
+                        "endDateTime": "2026-08-30T15:00:00Z",
+                        "endApproximate": false
+                    },
+                    "start": {
+                        "localDate": "2026-06-14",
+                        "localTime": "09:00:00",
+                        "dateTime": "2026-06-14T13:00:00Z",
+                        "dateTBD": false,
+                        "dateTBA": false,
+                        "timeTBA": false,
+                        "noSpecificTime": false
+                    },
+                    "end": {
+                        "localDate": "2026-08-30",
+                        "localTime": "11:00:00",
+                        "dateTime": "2026-08-30T15:00:00Z",
+                        "approximate": false,
+                        "noSpecificTime": false
+                    },
+                    "timezone": "America/Toronto",
+                    "status": {
+                        "code": "offsale"
+                    },
+                    "spanMultipleDays": false
+                },
+                "classifications": [
+                    {
+                        "primary": true,
+                        "segment": {
+                            "id": "KZFzniwnSyZfZ7v7n1",
+                            "name": "Miscellaneous"
+                        },
+                        "type": {
+                            "id": "KZAyXgnZfZ7v7nI",
+                            "name": "Undefined"
+                        },
+                        "subType": {
+                            "id": "KZFzBErXgnZfZ7v7lJ",
+                            "name": "Undefined"
+                        },
+                        "family": false
+                    }
+                ],
+                "priceRanges": [
+                    {
+                        "type": "standard",
+                        "currency": "CAD",
+                        "min": 58.19,
+                        "max": 58.19
+                    }
+                ],
+                "nameOrigin": "custom",
+                "_links": {
+                    "self": {
+                        "href": "/discovery/v2/events/rZ7HnEZ1Af-0Zd?locale=en-us"
+                    },
+                    "venues": [
+                        {
+                            "href": "/discovery/v2/venues/rZ7HnEZ1746uI?locale=en-us"
+                        }
+                    ]
+                },
+                "_embedded": {
+                    "venues": [
+                        {
+                            "name": "Casa Loma ",
+                            "type": "venue",
+                            "id": "rZ7HnEZ1746uI",
+                            "test": false,
+                            "url": "https://www.ticketweb.ca/venue/casa-loma--toronto-on/547368",
+                            "locale": "en-us",
+                            "distance": 2.17,
+                            "units": "MILES",
+                            "postalCode": "M5R 1X8",
+                            "timezone": "America/Toronto",
+                            "city": {
+                                "name": "Toronto"
+                            },
+                            "state": {
+                                "name": "Ontario",
+                                "stateCode": "ON"
+                            },
+                            "country": {
+                                "name": "Canada",
+                                "countryCode": "CA"
+                            },
+                            "address": {
+                                "line1": "1 Austin Terrace"
+                            },
+                            "location": {
+                                "longitude": "-79.409615",
+                                "latitude": "43.6781377"
+                            },
+                            "upcomingEvents": {
+                                "ticketweb": 8,
+                                "ticketmaster": 50,
+                                "_total": 58,
+                                "_filtered": 0
+                            },
+                            "_links": {
+                                "self": {
+                                    "href": "/discovery/v2/venues/rZ7HnEZ1746uI?locale=en-us"
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "Casa Loma General Admission",
+                "type": "event",
+                "id": "16tZko7AFZAGe82k",
+                "test": false,
+                "url": "https://www.ticketweb.ca/event/casa-loma-general-admission-casa-loma-tickets/14137834?REFERRAL_ID=tmfeed",
+                "locale": "en-us",
+                "images": [
+                    {
+                        "ratio": "16_9",
+                        "url": "https://s1.ticketm.net/dam/c/03e/e15ef00f-2c87-4421-ae61-d740851a703e_105891_TABLET_LANDSCAPE_16_9.jpg",
+                        "width": 1024,
+                        "height": 576,
+                        "fallback": true
+                    },
+                    {
+                        "ratio": "16_9",
+                        "url": "https://s1.ticketm.net/dam/c/03e/e15ef00f-2c87-4421-ae61-d740851a703e_105891_TABLET_LANDSCAPE_LARGE_16_9.jpg",
+                        "width": 2048,
+                        "height": 1152,
+                        "fallback": true
+                    },
+                    {
+                        "ratio": "16_9",
+                        "url": "https://s1.ticketm.net/dam/c/03e/e15ef00f-2c87-4421-ae61-d740851a703e_105891_RECOMENDATION_16_9.jpg",
+                        "width": 100,
+                        "height": 56,
+                        "fallback": true
+                    },
+                    {
+                        "ratio": "16_9",
+                        "url": "https://s1.ticketm.net/dam/c/03e/e15ef00f-2c87-4421-ae61-d740851a703e_105891_EVENT_DETAIL_PAGE_16_9.jpg",
+                        "width": 205,
+                        "height": 115,
+                        "fallback": true
+                    },
+                    {
+                        "ratio": "16_9",
+                        "url": "https://s1.ticketm.net/dam/c/03e/e15ef00f-2c87-4421-ae61-d740851a703e_105891_RETINA_PORTRAIT_16_9.jpg",
+                        "width": 640,
+                        "height": 360,
+                        "fallback": true
+                    },
+                    {
+                        "ratio": "16_9",
+                        "url": "https://s1.ticketm.net/dam/c/03e/e15ef00f-2c87-4421-ae61-d740851a703e_105891_RETINA_LANDSCAPE_16_9.jpg",
+                        "width": 1136,
+                        "height": 639,
+                        "fallback": true
+                    },
+                    {
+                        "ratio": "3_2",
+                        "url": "https://s1.ticketm.net/dam/c/03e/e15ef00f-2c87-4421-ae61-d740851a703e_105891_ARTIST_PAGE_3_2.jpg",
+                        "width": 305,
+                        "height": 203,
+                        "fallback": true
+                    },
+                    {
+                        "ratio": "3_2",
+                        "url": "https://s1.ticketm.net/dam/c/03e/e15ef00f-2c87-4421-ae61-d740851a703e_105891_RETINA_PORTRAIT_3_2.jpg",
+                        "width": 640,
+                        "height": 427,
+                        "fallback": true
+                    },
+                    {
+                        "ratio": "4_3",
+                        "url": "https://s1.ticketm.net/dam/c/03e/e15ef00f-2c87-4421-ae61-d740851a703e_105891_CUSTOM.jpg",
+                        "width": 305,
+                        "height": 225,
+                        "fallback": true
+                    },
+                    {
+                        "ratio": "3_2",
+                        "url": "https://s1.ticketm.net/dam/c/03e/e15ef00f-2c87-4421-ae61-d740851a703e_105891_TABLET_LANDSCAPE_3_2.jpg",
+                        "width": 1024,
+                        "height": 683,
+                        "fallback": true
+                    }
+                ],
+                "distance": 2.17,
+                "units": "MILES",
+                "sales": {
+                    "public": {
+                        "startDateTime": "2026-02-04T22:00:00Z",
+                        "startTBD": false,
+                        "startTBA": false,
+                        "endDateTime": "2026-07-15T19:30:00Z"
+                    }
+                },
+                "dates": {
+                    "start": {
+                        "localDate": "2026-07-15",
+                        "localTime": "09:30:00",
+                        "dateTime": "2026-07-15T13:30:00Z",
+                        "dateTBD": false,
+                        "dateTBA": false,
+                        "timeTBA": false,
+                        "noSpecificTime": false
+                    },
+                    "timezone": "America/Toronto",
+                    "status": {
+                        "code": "offsale"
+                    },
+                    "spanMultipleDays": false
+                },
+                "classifications": [
+                    {
+                        "primary": true,
+                        "segment": {
+                            "id": "KZFzniwnSyZfZ7v7n1",
+                            "name": "Miscellaneous"
+                        },
+                        "genre": {
+                            "id": "KnvZfZ7v7ll",
+                            "name": "Undefined"
+                        },
+                        "subGenre": {
+                            "id": "KZazBEonSMnZfZ7vAv1",
+                            "name": "Undefined"
+                        },
+                        "type": {
+                            "id": "KZAyXgnZfZ7v7lt",
+                            "name": "Event Style"
+                        },
+                        "subType": {
+                            "id": "KZFzBErXgnZfZ7vAvv",
+                            "name": "Sightseeing/Facility"
+                        },
+                        "family": false
+                    }
+                ],
+                "ageRestrictions": {
+                    "legalAgeEnforced": false
+                },
+                "ticketing": {
+                    "safeTix": {
+                        "enabled": false
+                    },
+                    "allInclusivePricing": {
+                        "enabled": false
+                    }
+                },
+                "nameOrigin": "custom",
+                "_links": {
+                    "self": {
+                        "href": "/discovery/v2/events/16tZko7AFZAGe82k?locale=en-us"
+                    },
+                    "venues": [
+                        {
+                            "href": "/discovery/v2/venues/KovZpZAkAnAA?locale=en-us"
+                        }
+                    ]
+                },
+                "_embedded": {
+                    "venues": [
+                        {
+                            "name": "Casa Loma",
+                            "type": "venue",
+                            "id": "KovZpZAkAnAA",
+                            "test": false,
+                            "url": "https://www.ticketmaster.ca/casa-loma-tickets-toronto/venue/131288",
+                            "locale": "en-us",
+                            "distance": 2.17,
+                            "units": "MILES",
+                            "postalCode": "M5R 1X8",
+                            "timezone": "America/New_York",
+                            "city": {
+                                "name": "Toronto"
+                            },
+                            "state": {
+                                "name": "Ontario",
+                                "stateCode": "ON"
+                            },
+                            "country": {
+                                "name": "Canada",
+                                "countryCode": "CA"
+                            },
+                            "address": {
+                                "line1": "1 Austin Terrace"
+                            },
+                            "location": {
+                                "longitude": "-79.40961500",
+                                "latitude": "43.67813770"
+                            },
+                            "upcomingEvents": {
+                                "ticketweb": 80,
+                                "ticketmaster": 139,
+                                "_total": 219,
+                                "_filtered": 0
+                            },
+                            "_links": {
+                                "self": {
+                                    "href": "/discovery/v2/venues/KovZpZAkAnAA?locale=en-us"
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "FIFA Fan Festival Toronto",
+                "type": "event",
+                "id": "168Zk3p0dZA5aG52",
+                "test": false,
+                "url": "https://www.ticketmaster.ca/fifa-fan-festival-toronto-toronto-ontario-07-15-2026/event/10006496903A8BAE",
+                "locale": "en-us",
+                "images": [
+                    {
+                        "ratio": "16_9",
+                        "url": "https://s1.ticketm.net/dam/a/494/4cc67909-5fcc-4e11-bf7e-62e7d5f99494_RECOMENDATION_16_9.jpg",
+                        "width": 100,
+                        "height": 56,
+                        "fallback": false
+                    },
+                    {
+                        "ratio": "16_9",
+                        "url": "https://s1.ticketm.net/dam/a/494/4cc67909-5fcc-4e11-bf7e-62e7d5f99494_TABLET_LANDSCAPE_16_9.jpg",
+                        "width": 1024,
+                        "height": 576,
+                        "fallback": false
+                    },
+                    {
+                        "ratio": "16_9",
+                        "url": "https://s1.ticketm.net/dam/a/494/4cc67909-5fcc-4e11-bf7e-62e7d5f99494_RETINA_LANDSCAPE_16_9.jpg",
+                        "width": 1136,
+                        "height": 639,
+                        "fallback": false
+                    }
+                ],
+                "distance": 1.45,
+                "units": "MILES",
+                "sales": {
+                    "public": {
+                        "startDateTime": "2026-05-06T14:00:00Z",
+                        "startTBD": false,
+                        "startTBA": false,
+                        "endDateTime": "2026-07-15T23:00:00Z"
+                    }
+                },
+                "dates": {
+                    "start": {
+                        "localDate": "2026-07-15",
+                        "localTime": "12:30:00",
+                        "dateTime": "2026-07-15T16:30:00Z",
+                        "dateTBD": false,
+                        "dateTBA": false,
+                        "timeTBA": false,
+                        "noSpecificTime": false
+                    },
+                    "timezone": "America/Toronto",
+                    "status": {
+                        "code": "cancelled"
+                    },
+                    "spanMultipleDays": false
+                },
+                "classifications": [
+                    {
+                        "primary": true,
+                        "segment": {
+                            "id": "KZFzniwnSyZfZ7v7nE",
+                            "name": "Sports"
+                        },
+                        "genre": {
+                            "id": "KnvZfZ7vA7A",
+                            "name": "Miscellaneous"
+                        },
+                        "subGenre": {
+                            "id": "KZazBEonSMnZfZ7vFIt",
+                            "name": "Miscellaneous"
+                        },
+                        "type": {
+                            "id": "KZAyXgnZfZ7v7lt",
+                            "name": "Event Style"
+                        },
+                        "subType": {
+                            "id": "KZFzBErXgnZfZ7vAF7",
+                            "name": "Fan Experiences"
+                        },
+                        "family": false
+                    }
+                ],
+                "info": "FIFA Fan Festival Toronto, where communities unite and passions are shared. Enjoy live entertainment, match broadcasts, interactive experiences and more than 30 food vendors.",
+                "seatmap": {
+                    "staticUrl": "https://mapsapi.tmol.io/maps/geometry/3/event/10006496903A8BAE/staticImage?type=png&systemId=HOST"
+                },
+                "accessibility": {},
+                "ageRestrictions": {
+                    "legalAgeEnforced": false
+                },
+                "ticketing": {
+                    "safeTix": {
+                        "enabled": true
+                    },
+                    "allInclusivePricing": {
+                        "enabled": false
+                    }
+                },
+                "nameOrigin": "custom",
+                "_links": {
+                    "self": {
+                        "href": "/discovery/v2/events/168Zk3p0dZA5aG52?locale=en-us"
+                    },
+                    "attractions": [
+                        {
+                            "href": "/discovery/v2/attractions/K8vZ917LJDV?locale=en-us"
+                        }
+                    ],
+                    "venues": [
+                        {
+                            "href": "/discovery/v2/venues/KovZpZAavJkA?locale=en-us"
+                        }
+                    ]
+                },
+                "_embedded": {
+                    "venues": [
+                        {
+                            "name": "Fort York & The Bentway",
+                            "type": "venue",
+                            "id": "KovZpZAavJkA",
+                            "test": false,
+                            "url": "https://www.ticketmaster.ca/fort-york-the-bentway-tickets-toronto/venue/132058",
+                            "locale": "en-us",
+                            "distance": 1.45,
+                            "units": "MILES",
+                            "postalCode": "M5V3K9",
+                            "timezone": "America/Toronto",
+                            "city": {
+                                "name": "Toronto"
+                            },
+                            "state": {
+                                "name": "Ontario",
+                                "stateCode": "ON"
+                            },
+                            "country": {
+                                "name": "Canada",
+                                "countryCode": "CA"
+                            },
+                            "address": {
+                                "line1": "250 Fort York Blvd"
+                            },
+                            "location": {
+                                "longitude": "-79.40422200",
+                                "latitude": "43.63876000"
+                            },
+                            "upcomingEvents": {
+                                "ticketmaster": 3,
+                                "_total": 3,
+                                "_filtered": 0
+                            },
+                            "_links": {
+                                "self": {
+                                    "href": "/discovery/v2/venues/KovZpZAavJkA?locale=en-us"
+                                }
+                            }
+                        }
+                    ],
+                    "attractions": [
+                        {
+                            "name": "FIFA Fan Festival Toronto",
+                            "type": "attraction",
+                            "id": "K8vZ917LJDV",
+                            "test": false,
+                            "url": "https://www.ticketmaster.com/fifa-fan-festival-toronto-tickets/artist/4331999",
+                            "locale": "en-us",
+                            "classifications": [
+                                {
+                                    "primary": true,
+                                    "segment": {
+                                        "id": "KZFzniwnSyZfZ7v7nE",
+                                        "name": "Sports"
+                                    },
+                                    "genre": {
+                                        "id": "KnvZfZ7vA7A",
+                                        "name": "Miscellaneous"
+                                    },
+                                    "subGenre": {
+                                        "id": "KZazBEonSMnZfZ7vFIt",
+                                        "name": "Miscellaneous"
+                                    },
+                                    "type": {
+                                        "id": "KZAyXgnZfZ7v7lt",
+                                        "name": "Event Style"
+                                    },
+                                    "subType": {
+                                        "id": "KZFzBErXgnZfZ7vAF7",
+                                        "name": "Fan Experiences"
+                                    },
+                                    "family": false
+                                }
+                            ],
+                            "_links": {
+                                "self": {
+                                    "href": "/discovery/v2/attractions/K8vZ917LJDV?locale=en-us"
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "Poppy - Constantly Nowhere Tour",
+                "type": "event",
+                "id": "1AvZZ_7Gkiccjht",
+                "test": false,
+                "url": "https://www.ticketmaster.ca/poppy-constantly-nowhere-tour-toronto-ontario-07-15-2026/event/1000644B2DB5C6E9",
+                "locale": "en-us",
+                "images": [
+                    {
+                        "ratio": "16_9",
+                        "url": "https://s1.ticketm.net/dam/a/e75/3625c63d-c444-48ac-974b-94efbd5fce75_TABLET_LANDSCAPE_16_9.jpg",
+                        "width": 1024,
+                        "height": 576,
+                        "fallback": false
+                    },
+                    {
+                        "ratio": "3_2",
+                        "url": "https://s1.ticketm.net/dam/a/e75/3625c63d-c444-48ac-974b-94efbd5fce75_RETINA_PORTRAIT_3_2.jpg",
+                        "width": 640,
+                        "height": 427,
+                        "fallback": false
+                    }
+                ],
+                "distance": 3.61,
+                "units": "MILES",
+                "sales": {
+                    "public": {
+                        "startDateTime": "2026-02-20T15:00:00Z",
+                        "startTBD": false,
+                        "startTBA": false,
+                        "endDateTime": "2026-07-16T00:00:00Z"
+                    },
+                    "presales": [
+                        {
+                            "startDateTime": "2026-02-18T17:00:00Z",
+                            "endDateTime": "2026-02-20T04:59:00Z",
+                            "name": "Artist Presale"
+                        }
+                    ]
+                },
+                "dates": {
+                    "start": {
+                        "localDate": "2026-07-15",
+                        "localTime": "18:00:00",
+                        "dateTime": "2026-07-15T22:00:00Z",
+                        "dateTBD": false,
+                        "dateTBA": false,
+                        "timeTBA": false,
+                        "noSpecificTime": false
+                    },
+                    "timezone": "America/New_York",
+                    "status": {
+                        "code": "offsale"
+                    },
+                    "spanMultipleDays": false
+                },
+                "classifications": [
+                    {
+                        "primary": true,
+                        "segment": {
+                            "id": "KZFzniwnSyZfZ7v7nJ",
+                            "name": "Music"
+                        },
+                        "genre": {
+                            "id": "KnvZfZ7vAvt",
+                            "name": "Metal"
+                        },
+                        "subGenre": {
+                            "id": "KZazBEonSMnZfZ7vaJ6",
+                            "name": "Nu-Metal"
+                        },
+                        "type": {
+                            "id": "KZAyXgnZfZ7v7nI",
+                            "name": "Undefined"
+                        },
+                        "subType": {
+                            "id": "KZFzBErXgnZfZ7v7lJ",
+                            "name": "Undefined"
+                        },
+                        "family": false
+                    }
+                ],
+                "promoter": {
+                    "id": "850",
+                    "name": "LIVE NATION CANADA (LN)",
+                    "description": "LIVE NATION CANADA (LN) / NTL / CAN"
+                },
+                "info": "This is an ALL AGES event. Doors: 6:00pm Show: 7:00pm",
+                "seatmap": {
+                    "staticUrl": "https://mapsapi.tmol.io/maps/geometry/3/event/1000644B2DB5C6E9/staticImage?type=png&systemId=HOST"
+                },
+                "accessibility": {
+                    "ticketLimit": 2
+                },
+                "ageRestrictions": {
+                    "legalAgeEnforced": false
+                },
+                "ticketing": {
+                    "safeTix": {
+                        "enabled": true
+                    },
+                    "allInclusivePricing": {
+                        "enabled": false
+                    }
+                },
+                "nameOrigin": "custom",
+                "_links": {
+                    "self": {
+                        "href": "/discovery/v2/events/1AvZZ_7Gkiccjht?locale=en-us"
+                    },
+                    "attractions": [
+                        {
+                            "href": "/discovery/v2/attractions/K8vZ917fae0?locale=en-us"
+                        }
+                    ],
+                    "venues": [
+                        {
+                            "href": "/discovery/v2/venues/KovZ917AJ4f?locale=en-us"
+                        }
+                    ]
+                },
+                "_embedded": {
+                    "venues": [
+                        {
+                            "name": "History",
+                            "type": "venue",
+                            "id": "KovZ917AJ4f",
+                            "test": false,
+                            "url": "https://www.ticketmaster.ca/history-tickets-toronto/venue/132501",
+                            "locale": "en-us",
+                            "distance": 3.61,
+                            "units": "MILES",
+                            "postalCode": "M4L 1G5",
+                            "timezone": "America/New_York",
+                            "city": {
+                                "name": "Toronto"
+                            },
+                            "state": {
+                                "name": "Ontario",
+                                "stateCode": "ON"
+                            },
+                            "country": {
+                                "name": "Canada",
+                                "countryCode": "CA"
+                            },
+                            "address": {
+                                "line1": "1663 Queen St. East"
+                            },
+                            "location": {
+                                "longitude": "-79.31351149",
+                                "latitude": "43.66684147"
+                            },
+                            "upcomingEvents": {
+                                "ticketmaster": 84,
+                                "ticketweb": 1,
+                                "_total": 86,
+                                "_filtered": 0
+                            },
+                            "_links": {
+                                "self": {
+                                    "href": "/discovery/v2/venues/KovZ917AJ4f?locale=en-us"
+                                }
+                            }
+                        }
+                    ],
+                    "attractions": [
+                        {
+                            "name": "Poppy",
+                            "type": "attraction",
+                            "id": "K8vZ917fae0",
+                            "test": false,
+                            "url": "https://www.ticketmaster.com/poppy-tickets/artist/2186490",
+                            "locale": "en-us",
+                            "classifications": [
+                                {
+                                    "primary": true,
+                                    "segment": {
+                                        "id": "KZFzniwnSyZfZ7v7nJ",
+                                        "name": "Music"
+                                    },
+                                    "genre": {
+                                        "id": "KnvZfZ7vAvt",
+                                        "name": "Metal"
+                                    },
+                                    "subGenre": {
+                                        "id": "KZazBEonSMnZfZ7vk6E",
+                                        "name": "Metal"
+                                    },
+                                    "type": {
+                                        "id": "KZAyXgnZfZ7v7la",
+                                        "name": "Individual"
+                                    },
+                                    "subType": {
+                                        "id": "KZFzBErXgnZfZ7vAd7",
+                                        "name": "Musician"
+                                    },
+                                    "family": false
+                                }
+                            ],
+                            "_links": {
+                                "self": {
+                                    "href": "/discovery/v2/attractions/K8vZ917fae0?locale=en-us"
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "_links": {
+        "first": {
+            "href": "/discovery/v2/events.json?latlong=43.6532%2C-79.3832&radius=25&page=0&size=5&sort=date,asc"
+        },
+        "self": {
+            "href": "/discovery/v2/events.json?size=5&latlong=43.6532%2C-79.3832&sort=date%2Casc&radius=25"
+        },
+        "next": {
+            "href": "/discovery/v2/events.json?latlong=43.6532%2C-79.3832&radius=25&page=1&size=5&sort=date,asc"
+        },
+        "last": {
+            "href": "/discovery/v2/events.json?latlong=43.6532%2C-79.3832&radius=25&page=342&size=5&sort=date,asc"
+        }
+    },
+    "page": {
+        "size": 5,
+        "totalElements": 1712,
+        "totalPages": 343,
+        "number": 0
+    }
+}

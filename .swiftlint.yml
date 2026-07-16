@@ -1,0 +1,51 @@
+included:
+  - Rogers-Event Assignment
+  - Rogers-Event AssignmentTests
+
+excluded:
+  - Rogers-Event AssignmentUITests
+
+opt_in_rules:
+  - closure_spacing
+  - empty_count
+  - explicit_init
+  - fatal_error_message
+  - first_where
+  - force_unwrapping
+  - redundant_type_annotation
+  - sorted_imports
+
+disabled_rules:
+  - todo
+  # "Ticketmaster" is the third-party API vendor's actual name (TicketmasterEndpoint,
+  # TicketmasterEventDTO, etc.) — not something this codebase can rename.
+  - inclusive_language
+
+line_length:
+  warning: 130
+  error: 160
+
+function_body_length:
+  warning: 60
+  error: 100
+
+type_body_length:
+  warning: 250
+  error: 350
+
+file_length:
+  warning: 400
+  error: 500
+
+cyclomatic_complexity:
+  warning: 12
+  error: 18
+
+identifier_name:
+  min_length: 2
+  excluded:
+    - id
+
+force_unwrapping: warning
+force_cast: error
+force_try: error
