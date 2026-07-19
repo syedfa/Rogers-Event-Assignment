@@ -3,14 +3,14 @@ import CoreLocation
 import Foundation
 
 /// Owns the Home screen's selected date, selected segment, and the resulting
-/// `LoadState<[Event]>`. Upcoming reads through `EventsRepository` (network +
-/// response cache); Past and Bookmarked read `EventStore` directly and never touch
-/// the network.
+/// `LoadState<[Event]>`. Explore reads through `EventsRepository` (network +
+/// response cache) filtered to the selected date; Bookmarked reads `EventStore`
+/// directly, never touches the network, and ignores the selected date entirely.
 @MainActor
 final class HomeViewModel: ObservableObject {
     @Published private(set) var state: LoadState<[Event]> = .idle
     @Published private(set) var selectedDate: Date
-    @Published private(set) var selectedSegment: EventSegment = .upcoming
+    @Published private(set) var selectedSegment: EventSegment = .explore
     @Published private(set) var locationAuthorizationStatus: CLAuthorizationStatus
 
     let dateStripDays: [Date]
@@ -53,7 +53,7 @@ final class HomeViewModel: ObservableObject {
         selectedDate = Calendar.current.startOfDay(for: date)
         // Bookmarked is date-independent — it always shows every saved event,
         // regardless of what's selected in the date strip.
-        guard selectedSegment == .upcoming || selectedSegment == .past else { return }
+        guard selectedSegment == .explore else { return }
         await load()
     }
 
@@ -86,19 +86,15 @@ final class HomeViewModel: ObservableObject {
     func load() async {
         // Falls back to a default location when no live device location is
         // available (permission not granted, or — notably in the Simulator — no
-        // GPS fix set) so Upcoming/Past still have something geographically
-        // meaningful to query instead of the sparse, largely non-matching global
-        // catalog. Never used for displayed distance or proximity sorting — both
-        // of those only ever use a real, live location.
+        // GPS fix set) so Explore still has something geographically meaningful to
+        // query instead of the sparse, largely non-matching global catalog. Never
+        // used for displayed distance or proximity sorting — both of those only
+        // ever use a real, live location.
         let queryLocation = lastKnownLocation ?? DefaultLocation.fallback
 
         switch selectedSegment {
-        case .upcoming:
-            await repository.fetchUpcoming(for: selectedDate, near: queryLocation) { [weak self] newState in
-                self?.apply(newState)
-            }
-        case .past:
-            await repository.fetchPast(for: selectedDate, near: queryLocation) { [weak self] newState in
+        case .explore:
+            await repository.fetchEvents(for: selectedDate, near: queryLocation) { [weak self] newState in
                 self?.apply(newState)
             }
         case .bookmarked:
@@ -139,13 +135,7 @@ final class HomeViewModel: ObservableObject {
     }
 
     /// Warms `EventStore` with real data for every day in the date strip, not just
-    /// the selected one. Ticketmaster's date-range filtering is reliable for
-    /// today/near-future queries but not for backward-looking ones (confirmed via
-    /// live testing: 0 correctly-dated results across 6 different past days and
-    /// radii up to 150mi) — so a day's only realistic chance of having real data
-    /// once it's in the past is if it was already fetched while still current.
-    /// This makes "Past" meaningfully populated in ongoing use, even though it
-    /// can't retroactively backfill days that passed before the app ever ran.
+    /// the selected one, so switching dates in Explore feels instant.
     ///
     /// Deliberately separate from `onAppear()` / `load()` rather than awaited
     /// inline — `HomeView` fires this from its own `.task`, running concurrently so
@@ -154,7 +144,7 @@ final class HomeViewModel: ObservableObject {
     func prefetchDateStripDays() async {
         let location = lastKnownLocation ?? DefaultLocation.fallback
         for day in dateStripDays where !Calendar.current.isDate(day, inSameDayAs: selectedDate) {
-            await repository.fetchUpcoming(for: day, near: location) { _ in }
+            await repository.fetchEvents(for: day, near: location) { _ in }
         }
     }
 }

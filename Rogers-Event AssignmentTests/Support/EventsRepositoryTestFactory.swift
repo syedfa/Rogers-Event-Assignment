@@ -1,9 +1,8 @@
 import Foundation
 @testable import Rogers_Event_Assignment
 
-/// Shared factory for `EventsRepositoryTests` and `EventsRepositoryPastTests` — both
-/// exercise `DefaultEventsRepository` against the same in-memory `EventStore` and
-/// `ResponseCache` wiring, just for different segments (Upcoming vs. Past).
+/// Shared factory for `EventsRepositoryTests`, which exercises `DefaultEventsRepository`
+/// against an in-memory `EventStore` and `ResponseCache`.
 func makeEventsRepository(
     network: MockNetworkService,
     clock: TestClock,

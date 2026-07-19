@@ -131,8 +131,7 @@ private struct EmptyStateView: View {
 
     private var message: String {
         switch segment {
-        case .upcoming: return "No events found for this day."
-        case .past: return "No past events yet."
+        case .explore: return "No events found for this day."
         case .bookmarked: return "Bookmark events to see them here."
         }
     }

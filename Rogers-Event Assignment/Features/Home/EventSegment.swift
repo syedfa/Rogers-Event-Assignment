@@ -1,19 +1,18 @@
 import Foundation
 
-/// The three ways the Home screen can slice events. `.upcoming` is served by the
-/// network (through `EventsRepository`'s cache); `.past` and `.bookmarked` are
-/// served entirely from `EventStore` (SwiftData) and work offline.
+/// The two ways the Home screen can slice events. `.explore` is served by the
+/// network (through `EventsRepository`'s cache) and is filtered to the selected
+/// date; `.bookmarked` is served entirely from `EventStore` (SwiftData), works
+/// offline, and always shows every saved event regardless of the selected date.
 enum EventSegment: String, CaseIterable, Identifiable, Sendable {
-    case upcoming
-    case past
+    case explore
     case bookmarked
 
     var id: String { rawValue }
 
     var title: String {
         switch self {
-        case .upcoming: return "Upcoming"
-        case .past: return "Past"
+        case .explore: return "Explore"
         case .bookmarked: return "Saved"
         }
     }

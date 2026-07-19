@@ -57,17 +57,6 @@ struct EventStoreTests {
         #expect(await store.setBookmarked(true, for: "does-not-exist") == nil)
     }
 
-    @Test func pastReturnsOnlyEventsBeforeGivenDateMostRecentFirst() async {
-        let store = makeStore()
-        let past = sampleEvent(id: "past1", startDate: Date(timeIntervalSince1970: 1_000))
-        let morePast = sampleEvent(id: "past2", startDate: Date(timeIntervalSince1970: 500))
-        let future = sampleEvent(id: "future1", startDate: Date(timeIntervalSince1970: 9_999_999_999))
-        await store.upsert([past, morePast, future], fetchedAt: Date())
-
-        let results = await store.past(before: Date(timeIntervalSince1970: 600_000))
-        #expect(results.map(\.id) == ["past1", "past2"])
-    }
-
     @Test func bookmarkedReturnsOnlyBookmarkedEvents() async {
         let store = makeStore()
         await store.upsert([sampleEvent(id: "a"), sampleEvent(id: "b")], fetchedAt: Date())

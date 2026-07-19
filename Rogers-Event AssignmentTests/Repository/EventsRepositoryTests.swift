@@ -10,7 +10,7 @@ struct EventsRepositoryTests {
         let (repository, _) = makeEventsRepository(network: network, clock: clock)
         let collector = StateCollector<LoadState<[Event]>>()
 
-        await repository.fetchUpcoming(for: TicketmasterFixtures.sampleEventStartDate, near: nil) { collector.record($0) }
+        await repository.fetchEvents(for: TicketmasterFixtures.sampleEventStartDate, near: nil) { collector.record($0) }
 
         #expect(collector.values.count == 2)
         #expect(collector.values[0].isLoading)
@@ -29,10 +29,10 @@ struct EventsRepositoryTests {
         let fetchDate = TicketmasterFixtures.sampleEventStartDate
 
         // Prime the cache with a first fetch.
-        await repository.fetchUpcoming(for: fetchDate, near: nil) { _ in }
+        await repository.fetchEvents(for: fetchDate, near: nil) { _ in }
 
         let collector = StateCollector<LoadState<[Event]>>()
-        await repository.fetchUpcoming(for: fetchDate, near: nil) { collector.record($0) }
+        await repository.fetchEvents(for: fetchDate, near: nil) { collector.record($0) }
 
         #expect(collector.values.count == 2)
         guard case .loaded = collector.values[0] else {
@@ -52,7 +52,7 @@ struct EventsRepositoryTests {
         let (repository, _) = makeEventsRepository(network: network, clock: clock)
         let collector = StateCollector<LoadState<[Event]>>()
 
-        await repository.fetchUpcoming(for: clock.now(), near: nil) { collector.record($0) }
+        await repository.fetchEvents(for: clock.now(), near: nil) { collector.record($0) }
 
         guard case .failed(let error, let previous) = collector.values.last else {
             Issue.record("Expected .failed, got \(String(describing: collector.values.last))")
@@ -74,10 +74,10 @@ struct EventsRepositoryTests {
         let (repository, _) = makeEventsRepository(network: network, clock: clock)
         let fetchDate = TicketmasterFixtures.sampleEventStartDate
 
-        await repository.fetchUpcoming(for: fetchDate, near: nil) { _ in }
+        await repository.fetchEvents(for: fetchDate, near: nil) { _ in }
 
         let collector = StateCollector<LoadState<[Event]>>()
-        await repository.fetchUpcoming(for: fetchDate, near: nil) { collector.record($0) }
+        await repository.fetchEvents(for: fetchDate, near: nil) { collector.record($0) }
 
         guard case .failed(let error, let previous) = collector.values.last else {
             Issue.record("Expected .failed, got \(String(describing: collector.values.last))")
@@ -98,7 +98,7 @@ struct EventsRepositoryTests {
         let (repository, _) = makeEventsRepository(network: network, clock: clock, apiKey: nil)
         let collector = StateCollector<LoadState<[Event]>>()
 
-        await repository.fetchUpcoming(for: clock.now(), near: nil) { collector.record($0) }
+        await repository.fetchEvents(for: clock.now(), near: nil) { collector.record($0) }
 
         #expect(collector.values.count == 1)
         #expect(collector.values.first?.error == .unauthorized)
@@ -113,13 +113,13 @@ struct EventsRepositoryTests {
     /// nowhere near the fixture's 2026-08-01 event, so requesting "today" must
     /// exclude it even though the server returned it.
     @MainActor
-    @Test func fetchUpcomingExcludesEventsOutsideTheRequestedDayWindowEvenIfServerReturnsThem() async {
+    @Test func fetchEventsExcludesEventsOutsideTheRequestedDayWindowEvenIfServerReturnsThem() async {
         let clock = TestClock()
         let network = MockNetworkService { _ in .success(Data(TicketmasterFixtures.singleFullEvent.utf8)) }
         let (repository, _) = makeEventsRepository(network: network, clock: clock)
         let collector = StateCollector<LoadState<[Event]>>()
 
-        await repository.fetchUpcoming(for: clock.now(), near: nil) { collector.record($0) }
+        await repository.fetchEvents(for: clock.now(), near: nil) { collector.record($0) }
 
         guard case .loaded(let events) = collector.values.last else {
             Issue.record("Expected .loaded, got \(String(describing: collector.values.last))")
@@ -133,17 +133,17 @@ struct EventsRepositoryTests {
         let network = MockNetworkService { _ in .success(Data(TicketmasterFixtures.singleFullEvent.utf8)) }
         let (repository, store) = makeEventsRepository(network: network, clock: clock)
 
-        await repository.fetchUpcoming(for: TicketmasterFixtures.sampleEventStartDate, near: nil) { _ in }
+        await repository.fetchEvents(for: TicketmasterFixtures.sampleEventStartDate, near: nil) { _ in }
 
         #expect(await store.event(id: "abc123") != nil)
     }
 
-    @Test func fetchUpcomingFiltersOutEventsWithoutAVenue() async {
+    @Test func fetchEventsFiltersOutEventsWithoutAVenue() async {
         let clock = TestClock()
         let network = MockNetworkService { _ in .success(Data(TicketmasterFixtures.mixedVenueAndNoVenueEvents.utf8)) }
         let (repository, store) = makeEventsRepository(network: network, clock: clock)
 
-        await repository.fetchUpcoming(for: TicketmasterFixtures.sampleEventStartDate, near: nil) { _ in }
+        await repository.fetchEvents(for: TicketmasterFixtures.sampleEventStartDate, near: nil) { _ in }
 
         #expect(await store.event(id: "abc123") != nil)
         #expect(await store.event(id: "digital456") == nil)

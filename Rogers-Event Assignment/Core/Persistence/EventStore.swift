@@ -17,9 +17,6 @@ protocol EventStore: Sendable {
 
     func event(id: String) async -> Event?
 
-    /// Persisted events whose start date is before `date`, most recent first.
-    func past(before date: Date) async -> [Event]
-
     func bookmarked() async -> [Event]
 
     /// Deletes non-bookmarked events last fetched before `cutoff`. Bookmarked events
@@ -61,19 +58,6 @@ actor SwiftDataEventStore: EventStore {
     func event(id: String) async -> Event? {
         let descriptor = FetchDescriptor<PersistedEvent>(predicate: #Predicate { $0.id == id })
         return try? modelContext.fetch(descriptor).first?.asDomainEvent
-    }
-
-    func past(before date: Date) async -> [Event] {
-        // SwiftData's #Predicate macro doesn't reliably translate optional
-        // comparisons on `startDate` (both a force-unwrap guard and nil-coalescing
-        // either silently match nothing or fail to compile). Filtering in Swift
-        // after a plain fetch sidesteps it; the dataset here is small since
-        // `prune(olderThan:)` bounds it to ~30 days of non-bookmarked history.
-        let descriptor = FetchDescriptor<PersistedEvent>(sortBy: [SortDescriptor(\.startDate, order: .reverse)])
-        let all = (try? modelContext.fetch(descriptor)) ?? []
-        return all
-            .filter { ($0.startDate ?? .distantFuture) < date }
-            .map(\.asDomainEvent)
     }
 
     func bookmarked() async -> [Event] {

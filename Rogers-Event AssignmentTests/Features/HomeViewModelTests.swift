@@ -42,13 +42,13 @@ struct HomeViewModelTests {
 
     /// Regression test: the Simulator has no GPS fix unless one is manually set, so
     /// `currentLocation()` returns `nil` even when authorized. Without a fallback,
-    /// every "Upcoming"/"Past" query would run unfiltered by geography — confirmed
-    /// via direct API testing to return effectively zero real, correctly-dated
-    /// local events. `HomeViewModel` must substitute `DefaultLocation.fallback`.
+    /// every "Explore" query would run unfiltered by geography — confirmed via
+    /// direct API testing to return effectively zero real, correctly-dated local
+    /// events. `HomeViewModel` must substitute `DefaultLocation.fallback`.
     @Test func fetchUsesDefaultLocationWhenNoLiveLocationIsAvailable() async {
         let repository = FakeEventsRepository()
         let locations = StateCollector<CLLocation?>()
-        repository.fetchUpcomingHandler = { _, location in
+        repository.fetchEventsHandler = { _, location in
             locations.record(location)
             return .loaded([])
         }
@@ -67,10 +67,10 @@ struct HomeViewModelTests {
         #expect(locations.values.first ?? nil != nil)
     }
 
-    @Test func upcomingSegmentIsServedByRepositoryNotEventStore() async {
+    @Test func exploreSegmentIsServedByRepositoryNotEventStore() async {
         let repository = FakeEventsRepository()
         let networkEvent = sampleEvent(id: "net1")
-        repository.fetchUpcomingHandler = { _, _ in .loaded([networkEvent]) }
+        repository.fetchEventsHandler = { _, _ in .loaded([networkEvent]) }
         let store = SwiftDataEventStore(modelContainer: ModelContainerFactory.make(inMemory: true))
         let viewModel = makeViewModel(repository: repository, eventStore: store)
 
@@ -80,13 +80,10 @@ struct HomeViewModelTests {
         #expect(viewModel.state.currentValue?.map(\.id) == ["net1"])
     }
 
-    /// Ticketmaster's date-range filtering is reliable for today/near-future
-    /// queries but not backward-looking ones (confirmed via live testing against
-    /// the real API). The only realistic way "Past" ever has real data for a day is
-    /// if it was already fetched while still current — so the date strip's whole
-    /// visible range must be warmed, not just the selected day. `HomeView` fires
-    /// this from its own concurrent `.task` (see `prefetchDateStripDays()`'s doc),
-    /// not from `onAppear()`, so it's called explicitly here too.
+    /// The date strip's whole visible range is warmed in the background, not just
+    /// the selected day, so switching dates in Explore feels instant. `HomeView`
+    /// fires this from its own concurrent `.task` (see `prefetchDateStripDays()`'s
+    /// doc), not from `onAppear()`, so it's called explicitly here too.
     @Test func prefetchDateStripDaysWarmsEveryDayInTheStrip() async {
         let repository = FakeEventsRepository()
         let store = SwiftDataEventStore(modelContainer: ModelContainerFactory.make(inMemory: true))
@@ -95,23 +92,9 @@ struct HomeViewModelTests {
         await viewModel.onAppear()
         await viewModel.prefetchDateStripDays()
 
-        let requestedDays = Set(repository.allFetchUpcomingDates.map { Calendar.current.startOfDay(for: $0) })
+        let requestedDays = Set(repository.allFetchDates.map { Calendar.current.startOfDay(for: $0) })
         let expectedDays = Set(viewModel.dateStripDays.map { Calendar.current.startOfDay(for: $0) })
         #expect(requestedDays == expectedDays)
-    }
-
-    @Test func pastSegmentIsServedByRepository() async {
-        let repository = FakeEventsRepository()
-        let pastEvent = sampleEvent(id: "past1", startDate: Date(timeIntervalSince1970: 1))
-        repository.fetchPastHandler = { _, _ in .loaded([pastEvent]) }
-        let store = SwiftDataEventStore(modelContainer: ModelContainerFactory.make(inMemory: true))
-
-        let viewModel = makeViewModel(repository: repository, eventStore: store)
-        await viewModel.select(segment: .past)
-
-        #expect(repository.fetchPastCallCount == 1)
-        #expect(repository.fetchCallCount == 0)
-        #expect(viewModel.state.currentValue?.map(\.id) == ["past1"])
     }
 
     @Test func bookmarkedSegmentReadsFromEventStoreNotRepository() async {
@@ -139,7 +122,7 @@ struct HomeViewModelTests {
         await store.upsert([event], fetchedAt: Date())
         // Mirrors how the real DefaultEventsRepository behaves: every fetch re-reads
         // current truth from EventStore rather than returning a fixed snapshot.
-        repository.fetchUpcomingHandler = { _, _ in
+        repository.fetchEventsHandler = { _, _ in
             let current = await store.event(id: "e1")
             return .loaded(current.map { [$0] } ?? [])
         }
@@ -161,7 +144,7 @@ struct HomeViewModelTests {
         #expect(viewModel.state.currentValue?.first?.isBookmarked == true)
     }
 
-    @Test func selectingDateReloadsWhileOnUpcomingSegment() async {
+    @Test func selectingDateReloadsWhileOnExploreSegment() async {
         let repository = FakeEventsRepository()
         let store = SwiftDataEventStore(modelContainer: ModelContainerFactory.make(inMemory: true))
         let viewModel = makeViewModel(repository: repository, eventStore: store)
@@ -169,24 +152,6 @@ struct HomeViewModelTests {
         await viewModel.select(date: Date(timeIntervalSince1970: 1_800_000_000))
 
         #expect(repository.fetchCallCount == 1)
-    }
-
-    /// Regression test for the reported bug: selecting a date on the Past tab must
-    /// re-query for that specific day (a separate fetchPast call per day, mirroring
-    /// Upcoming), not silently do nothing.
-    @Test func selectingDateReloadsWhileOnPastSegment() async {
-        let repository = FakeEventsRepository()
-        let store = SwiftDataEventStore(modelContainer: ModelContainerFactory.make(inMemory: true))
-        let viewModel = makeViewModel(repository: repository, eventStore: store)
-        let pickedDate = Date(timeIntervalSince1970: 1_800_000_000)
-
-        await viewModel.select(segment: .past)
-        await viewModel.select(date: pickedDate)
-
-        // Once for select(segment:), once for select(date:).
-        #expect(repository.fetchPastCallCount == 2)
-        #expect(repository.fetchCallCount == 0)
-        #expect(repository.lastFetchPastDate == Calendar.current.startOfDay(for: pickedDate))
     }
 
     @Test func selectingDateDoesNotAffectBookmarkedSegment() async {
@@ -198,7 +163,6 @@ struct HomeViewModelTests {
         await viewModel.select(date: Date(timeIntervalSince1970: 1_800_000_000))
 
         #expect(repository.fetchCallCount == 0)
-        #expect(repository.fetchPastCallCount == 0)
     }
 
     @Test func toggleBookmarkPersistsAndReloadsCurrentSegment() async {
@@ -298,12 +262,12 @@ struct HomeViewModelTests {
         #expect(viewModel.state.currentValue?.map(\.id) == ["near", "medium", "far"])
     }
 
-    @Test func upcomingSegmentSortsNearestToFarthestWhenLocationIsAvailable() async {
+    @Test func exploreSegmentSortsNearestToFarthestWhenLocationIsAvailable() async {
         let repository = FakeEventsRepository()
         let near = sampleEvent(id: "near", venue: venue(latitude: 43.66, longitude: -79.38))
         let far = sampleEvent(id: "far", venue: venue(latitude: 45.50, longitude: -73.57))
         // Repository returns farthest first — HomeViewModel must reorder.
-        repository.fetchUpcomingHandler = { _, _ in .loaded([far, near]) }
+        repository.fetchEventsHandler = { _, _ in .loaded([far, near]) }
         let store = SwiftDataEventStore(modelContainer: ModelContainerFactory.make(inMemory: true))
 
         let locationService = FakeLocationService()
@@ -324,7 +288,7 @@ struct HomeViewModelTests {
         let repository = FakeEventsRepository()
         let far = sampleEvent(id: "far", venue: venue(latitude: 45.50, longitude: -73.57))
         let near = sampleEvent(id: "near", venue: venue(latitude: 43.66, longitude: -79.38))
-        repository.fetchUpcomingHandler = { _, _ in .loaded([far, near]) }
+        repository.fetchEventsHandler = { _, _ in .loaded([far, near]) }
         let store = SwiftDataEventStore(modelContainer: ModelContainerFactory.make(inMemory: true))
         let locationService = FakeLocationService()
         locationService.location = nil
