@@ -11,8 +11,11 @@ conventions and the trade-offs log.
 
 ## Features
 
-- **Home**: date strip + Upcoming / Past / Saved segmented control, event cards
-  with image, title, category, date, venue, and a bookmark heart.
+- **Home**: date strip + Explore / Saved segmented control, event cards
+  with image, title, category, date, venue, and a bookmark heart. Explore is
+  filtered to the selected date (the whole day, including events already
+  underway or finished); Saved always shows every bookmarked event regardless
+  of the selected date.
 - **Event detail**: hero image, full info, distance to venue, "Open in Maps",
   and a prominent (un)Bookmark button.
 - **Bookmarks**: persisted in SwiftData, never purged by the background prune,
@@ -21,8 +24,8 @@ conventions and the trade-offs log.
   memory + disk tier, fully native (`NSCache`, `FileManager`, `URLSession`).
 - **Location**: contextual pre-permission screen, distance shown when granted,
   graceful degradation when not.
-- **Background refresh**: low-frequency `BGAppRefreshTask` keeps Upcoming data
-  warm and prunes stale cache entries.
+- **Background refresh**: low-frequency `BGAppRefreshTask` keeps today's
+  nearby events warm and prunes stale cache entries.
 - **Unified networking**: one `NetworkService` with retry/backoff
   (`RetryPolicy`) and one `LoadState<Value>` state machine used by every
   ViewModel — retry logic and loading/error UI are written exactly once.
@@ -101,5 +104,5 @@ docs/             Architecture diagram, sequence diagrams, engineering standards
 See the trade-offs log in
 [`docs/ENGINEERING_STANDARDS.md`](docs/ENGINEERING_STANDARDS.md#trade-offs-log)
 for the reasoning behind decisions like the single SwiftData model, the
-Past segment's 30-day trailing window, filtering out venue-less
+30-day non-bookmarked retention window, filtering out venue-less
 events, and the client-side API key.

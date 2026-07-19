@@ -93,51 +93,39 @@ flowchart LR
 | `EventStore` | All SwiftData reads/writes: upsert-by-id, bookmark toggle, prune, segment queries | Bookmarked events are **structurally excluded** from the prune predicate — never a "don't delete if" afterthought |
 | `EventsRepository` | Orchestrates network + `ResponseCache` + `EventStore` with a stale-while-revalidate flow | The only thing ViewModels talk to for event data |
 | `BackgroundRefreshScheduler` | Schedules/handles a low-frequency `BGAppRefreshTask` | Refreshes the repository and prunes stale, non-bookmarked data |
-| `HomeViewModel` | Owns selected date + selected segment (Upcoming/Past/Bookmarked) + `LoadState<[Event]>` | Upcoming and Past both read through the repository (network + `EventStore`); Bookmarked reads `EventStore` directly (fully offline) |
+| `HomeViewModel` | Owns selected date + selected segment (Explore/Saved) + `LoadState<[Event]>` | Explore reads through the repository (network + `EventStore`), filtered to the selected date; Saved reads `EventStore` directly (fully offline) and ignores the selected date |
 | `EventDetailViewModel` | Owns single-event `LoadState`, distance calculation, bookmark toggle | Bookmark toggle is a single call into `EventStore`, reflected everywhere via SwiftData's observation |
 
 ## Data flow: Home screen
 
-1. `HomeView` renders a date strip and an Upcoming/Past/Bookmarked segmented
-   control, backed by `HomeViewModel`.
-2. **Upcoming**: `HomeViewModel` asks `EventsRepository` for events in the
-   selected day's window. The repository checks `ResponseCache` (TTL ~10
-   min); on a hit it emits cached data immediately, then — if stale —
-   revalidates against the network in the background and emits again if the
-   result changed. Successful network responses are upserted into
-   `EventStore` (SwiftData) so they're available later.
-3. **Past**: mirrors Upcoming exactly, just for the selected day's history
-   instead of its future. `HomeViewModel` asks
-   `EventsRepository.fetchPast(for:near:)` for the *specific selected day* —
-   changing the date strip while on Past issues its own fetch, exactly like
-   Upcoming, rather than showing a fixed trailing window regardless of what's
-   selected. It emits whatever `EventStore` already has cached for that day
-   immediately, then queries the Discovery API for that single day (sorted
-   most-recent-first), upserts the results, and re-emits the merged local
-   view. Events that haven't started yet never count as "past" — if the
-   selected day is today, only events whose start time has already passed
-   are shown; if it's in the future, the segment is empty and no network
-   call is made at all.
+1. `HomeView` renders a date strip and an Explore/Saved segmented control,
+   backed by `HomeViewModel`.
+2. **Explore**: `HomeViewModel` asks `EventsRepository.fetchEvents(for:near:)`
+   for the selected day's window. It covers the *whole* day — events later
+   that day that haven't started yet are included exactly like ones already
+   underway or finished; there's no "has it started" filtering at all. The
+   repository checks `ResponseCache` (TTL ~10 min); on a hit it emits cached
+   data immediately, then **always** revalidates against the network and
+   emits again with the outcome (`onUpdate` fires twice on a cache hit, once
+   on a miss) — true stale-while-revalidate, not a skip-if-fresh check.
+   Successful network responses are upserted into `EventStore` (SwiftData)
+   so they're available offline later. `HomeViewModel.prefetchDateStripDays()`
+   (fired from its own concurrent `.task` in `HomeView`, not gating the
+   initial screen or the location primer) warms every day in the visible
+   ±3-day strip on launch, so switching dates in Explore feels instant
+   instead of re-triggering a fresh loading state each time.
 
-   **Known API limitation, verified via live testing**: the Discovery API's
-   `startDateTime`/`endDateTime` filtering is reliable for today/near-future
-   queries but not for backward-looking ones — across 6 different past days
-   and radii up to 150mi, every event Ticketmaster returned for a
-   backward-dated query was actually dated on a *different* day than
-   requested (`mapAndFilter`'s window check correctly rejects these). So a
-   day's realistic chance of having real data once it's in the past comes
-   entirely from having already been fetched while it was still current —
-   `HomeViewModel.prefetchDateStripDays()` (fired from its own concurrent
-   `.task` in `HomeView`, not gating the initial screen or the location
-   primer) warms every day in the visible ±3-day strip on launch for exactly
-   this reason. This still showcases why persistence matters: Past always
-   has something to show offline, and accumulates history across sessions
-   rather than only ever reflecting the
-   single most recent fetch.
-4. **Bookmarked**: read-only query against `EventStore` for
-   `isBookmarked == true`, independent of the date strip — works fully
-   offline, no network path at all.
-5. Tapping a card's heart, or the detail screen's bookmark button, calls
+   Ticketmaster's `startDateTime`/`endDateTime` query params aren't reliably
+   honored for every catalog entry (confirmed via live testing: a request
+   scoped to 2026-07-15 returned an event actually dated 2024-05-25) — so
+   `mapAndFilter`'s client-side window check is what actually guarantees a
+   day only ever shows events that truly fall on it, regardless of what the
+   server returns.
+3. **Saved**: read-only query against `EventStore` for
+   `isBookmarked == true`, independent of the date strip — deliberately
+   ignores the selected date and works fully offline, no network path at
+   all.
+4. Tapping a card's heart, or the detail screen's bookmark button, calls
    `EventStore.setBookmarked(_:for:)`. This is the single source of truth;
    both the card and the detail screen observe the same SwiftData-backed
    state.
@@ -155,11 +143,11 @@ flowchart LR
   device storage is low, and entries older than the TTL are evicted
   opportunistically on read/prune).
 - **SwiftData**: doubles as the "last-fetched events" cache the spec asks
-  for *and* the durable store for bookmarks and the Past segment's offline
-  fallback. Non-bookmarked events older than 30 days are pruned on launch and
-  during background refresh; bookmarked events are **never** pruned, by
-  construction of the prune predicate (`EventStoreTests` asserts this
-  directly).
+  for *and* the durable store for bookmarks and Explore's offline fallback
+  for a day that's already been fetched. Non-bookmarked events older than 30
+  days are pruned on launch and during background refresh; bookmarked events
+  are **never** pruned, by construction of the prune predicate
+  (`EventStoreTests` asserts this directly).
 - **Venue-less events are filtered out** of every repository response
   (`DefaultEventsRepository.mapAndFilter`). Ticketmaster's catalog includes
   digital-content/reissue listings with no physical venue — confirmed via a

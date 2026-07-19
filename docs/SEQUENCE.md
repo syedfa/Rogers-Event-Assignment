@@ -1,6 +1,6 @@
 # Sequence Diagrams
 
-## 1. Cold launch → Upcoming events (cache miss, then hit on revisit)
+## 1. Cold launch → Explore events (cache miss, then hit-and-revalidate on revisit)
 
 ```mermaid
 sequenceDiagram
@@ -14,10 +14,10 @@ sequenceDiagram
     participant API as Ticketmaster API
     participant Store as EventStore (SwiftData)
 
-    User->>Home: Launch app (Upcoming, today selected)
+    User->>Home: Launch app (Explore, today selected)
     Home->>VM: onAppear
     VM->>VM: state = .loading(previous: nil)
-    VM->>Repo: events(for: today, segment: .upcoming)
+    VM->>Repo: fetchEvents(for: today, near: location)
     Repo->>Cache: lookup(key: endpoint)
     Cache-->>Repo: miss
     Repo->>Net: request(TicketmasterEndpoint)
@@ -33,13 +33,22 @@ sequenceDiagram
     Home-->>User: render event cards
 
     Note over User,Home: User backgrounds and reopens app within 10 min
-    User->>Home: Reopen (Upcoming, today)
+    User->>Home: Reopen (Explore, today)
     Home->>VM: onAppear
-    VM->>Repo: events(for: today, segment: .upcoming)
+    VM->>Repo: fetchEvents(for: today, near: location)
     Repo->>Cache: lookup(key: endpoint)
     Cache-->>Repo: hit (fresh)
-    Repo-->>VM: .loaded([Event]) (no network call)
+    Repo-->>VM: .loaded([Event]) (cached — rendered immediately)
     VM-->>Home: render immediately
+    Note over Repo,API: Cache hit never skips revalidation —\nthe repository still requests the network next
+    Repo->>Net: request(TicketmasterEndpoint)
+    Net->>API: GET /discovery/v2/events.json?...
+    API-->>Net: 200 OK + JSON
+    Net-->>Repo: decoded EventsResponse
+    Repo->>Cache: store(response, ttl: 10m)
+    Repo->>Store: upsert(events)
+    Repo-->>VM: .loaded([Event]) (refreshed)
+    VM-->>Home: publish change if anything differs
 ```
 
 ## 2. Network failure with retry, falling back to cached data
@@ -53,11 +62,11 @@ sequenceDiagram
     participant Retry as RetryPolicy
     participant API as Ticketmaster API
 
-    VM->>Repo: events(for: date, segment: .upcoming)
+    VM->>Repo: fetchEvents(for: date, near: location)
     Repo->>Cache: lookup(key: endpoint)
-    Cache-->>Repo: hit (stale, past TTL)
+    Cache-->>Repo: hit (fresh)
     Repo-->>VM: .loaded(previous) [stale-while-revalidate: emit immediately]
-    Repo->>Net: request(TicketmasterEndpoint) [revalidate in background]
+    Repo->>Net: request(TicketmasterEndpoint) [always revalidates, even on a fresh hit]
 
     loop up to maxAttempts
         Net->>API: GET events
