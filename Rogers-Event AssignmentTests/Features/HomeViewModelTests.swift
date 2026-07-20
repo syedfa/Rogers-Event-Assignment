@@ -67,6 +67,9 @@ struct HomeViewModelTests {
         #expect(locations.values.first ?? nil != nil)
     }
 
+    /// Core test 2/3 (assignment spec): proves the ViewModel's segment-routing
+    /// contract — Explore reads through the network-backed `EventsRepository`,
+    /// never straight from `EventStore` (that path is Saved's alone).
     @Test func exploreSegmentIsServedByRepositoryNotEventStore() async {
         let repository = FakeEventsRepository()
         let networkEvent = sampleEvent(id: "net1")

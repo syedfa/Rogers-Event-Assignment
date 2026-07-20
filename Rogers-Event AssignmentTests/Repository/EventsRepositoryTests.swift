@@ -21,6 +21,10 @@ struct EventsRepositoryTests {
         #expect(events.first?.id == "abc123")
     }
 
+    /// Core test 1/3 (assignment spec): proves the repository's
+    /// stale-while-revalidate contract — a cache hit emits immediately, then
+    /// the repository *always* revalidates over the network and emits again,
+    /// rather than treating a fresh cache as a reason to skip the network.
     @MainActor
     @Test func cacheHitEmitsCachedResultThenRefreshedResult() async {
         let clock = TestClock()

@@ -66,6 +66,25 @@ Or ⌘U in Xcode. All core logic (networking, caching, persistence, mapping,
 ViewModels) is covered by unit tests using Swift Testing — see
 [`Rogers-Event AssignmentTests`](Rogers-Event%20AssignmentTests).
 
+**Core tests.** The assignment calls for 3 unit tests; these 3 are the
+primary ones, one per architectural layer, each marked inline with a
+"Core test N/3" doc comment:
+
+1. [`EventsRepositoryTests.cacheHitEmitsCachedResultThenRefreshedResult`](<Rogers-Event AssignmentTests/Repository/EventsRepositoryTests.swift>)
+   — repository/caching layer: proves the stale-while-revalidate contract (a
+   cache hit emits immediately, then the repository always revalidates over
+   the network).
+2. [`HomeViewModelTests.exploreSegmentIsServedByRepositoryNotEventStore`](<Rogers-Event AssignmentTests/Features/HomeViewModelTests.swift>)
+   — ViewModel layer: proves Explore routes through the network-backed
+   repository, never straight from local storage.
+3. [`EventStoreTests.pruneNeverDeletesBookmarkedEventsRegardlessOfAge`](<Rogers-Event AssignmentTests/Core/EventStoreTests.swift>)
+   — persistence layer: proves the core invariant that bookmarks are never
+   purged, no matter how old.
+
+The rest of the suite (retry/backoff, cache TTL expiry, DTO mapping,
+distance formatting, endpoint building, and more) is additional coverage
+kept in place beyond the assignment's minimum ask.
+
 ### Linting
 
 ```sh

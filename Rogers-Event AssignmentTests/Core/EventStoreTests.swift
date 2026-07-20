@@ -81,8 +81,9 @@ struct EventStoreTests {
         #expect(await store.event(id: "recent") != nil)
     }
 
-    /// The core invariant from the spec: a bookmarked event must never be purged,
-    /// no matter how old its last fetch was.
+    /// Core test 3/3 (assignment spec): the core invariant from the spec — a
+    /// bookmarked event must never be purged, no matter how old its last
+    /// fetch was.
     @Test func pruneNeverDeletesBookmarkedEventsRegardlessOfAge() async {
         let store = makeStore()
         let now = Date()
